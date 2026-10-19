@@ -1,0 +1,25 @@
+name: Mera Robot
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  CI-kaam:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 1. Code ko download karo
+        uses: actions/checkout@v4
+
+      - name: 2. Check karo file hai ya nahi (Ye CI hai)
+        run: |
+          echo "Checking kar raha hu..."
+          ls -la
+          echo "File mil gayi, CI Pass!"
+
+  CD-ka-kaam:
+    runs-on: ubuntu-latest
+    needs: CI-ka-kaam
+    steps:
+      - name: 3. Live bhejo (Ye CD hai)
+        run: echo "Ab ye code live website pe jayega!"
