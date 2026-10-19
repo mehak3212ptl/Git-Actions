@@ -1,13 +1,32 @@
-name: Mera Robot Fix
+name: Website Live Karo
 
-on: push
+on:
+  push:
+    branches: [ "master" ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  pehla-kaam:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Code download karo
         uses: actions/checkout@v4
-      
-      - name: Hello bolo
-        run: echo "CI CD kaam kar gaya!"
+
+      - name: Pages ke liye setup
+        uses: actions/configure-pages@v5
+
+      - name: File ko upload karo
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Website ko live karo
+        id: deployment
+        uses: actions/deploy-pages@v4
